@@ -29,7 +29,7 @@ export default function Sidebar() {
       <aside
         className={`
           fixed top-0 left-0 h-full w-64 z-50
-          bg-gradient-to-b from-[#1d1c6b] to-[#241fa3]
+          bg-gradient-to-b from-[#1d1c6b] to-[#18127A]
           text-white transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0
