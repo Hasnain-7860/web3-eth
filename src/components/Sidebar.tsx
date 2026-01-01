@@ -1,11 +1,15 @@
 import { useState } from "react";
 import {
   HiHome,
-  HiUsers,
-  HiBan,
   HiCurrencyDollar,
   HiMenu,
 } from "react-icons/hi";
+import { LuUsers } from "react-icons/lu";
+import { FiDollarSign } from "react-icons/fi";
+import { IoIosArrowForward } from "react-icons/io";
+
+
+
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -35,42 +39,52 @@ export default function Sidebar() {
           lg:translate-x-0
         `}
       >
-        <div className="px-6 py-5 text-lg font-semibold">
-          Dashboard
-        </div>
+        
 
-        <nav className="px-3 text-sm space-y-1">
-          <p className="px-4 py-2 flex items-center gap-3 rounded-md bg-white/15">
-            <HiHome className="text-lg" />
+        <nav className="  text-sm space-y-1 mt-20">
+          <button className="px-2 py-3 flex w-[85%] ml-4 gap-14 items-center gap-3 rounded-md bg-[#3A3DD1] xl:text-[20px]">
+          <p className="  flex items-center gap-3 rounded-md  xl:text-[20px] ">
+            <HiHome />
             Dashboard
           </p>
+          </button>
+          <p className="px-11  py-3 flex items-center gap-3 rounded-md xl:text-[16px]">- Statistics</p>
 
-          <p className="mt-4 px-4 text-[11px] tracking-wider text-white/70">
+          <p className="mt-4 px-4 text-[11px] py-2 tracking-wider text-white/100 xl:text-[15px] bg-white/15 ">
             ADMIN CONTROLS
           </p>
-
-          <p className="px-4 py-2 flex items-center gap-3 rounded-md hover:bg-white/10 cursor-pointer">
-            <HiUsers className="text-lg" />
-            Users
+<button className="flex items-center  w-[85%] ml-4 gap-14  hover:bg-white/10 cursor-pointer rounded-md ">
+          <p className="px-4 py-3 flex items-center gap-3 ">
+            <LuUsers className="text-lg" />
+            Users 
           </p>
+           <IoIosArrowForward />
+          </button>
 
-          <p className="mt-4 px-4 text-[11px] tracking-wider text-white/70">
+          <p className="mt-4 px-4 text-[11px] py-2 tracking-wider text-white/100 xl:text-[15px]  bg-white/15">
             BLACK LIST
           </p>
 
-          <p className="px-4 py-2 flex items-center gap-3 rounded-md hover:bg-white/10 cursor-pointer">
-            <HiBan className="text-lg" />
-            Ban
+          <button className="flex items-center  w-[85%] ml-4 gap-14  hover:bg-white/10 cursor-pointer rounded-md ">
+          <p className="px-4 py-3 flex items-center gap-3 ">
+            <LuUsers className="text-lg" />
+            Ban 
           </p>
+           <IoIosArrowForward />
+          </button>
 
-          <p className="mt-4 px-4 text-[11px] tracking-wider text-white/70">
+          <p className="mt-4 px-4 text-[11px] py-2 tracking-wider text-white/100 xl:text-[15px]  bg-white/15">
             FAUCET STATS
           </p>
 
-          <p className="px-4 py-2 flex items-center gap-3 rounded-md hover:bg-white/10 cursor-pointer">
-            <HiCurrencyDollar className="text-lg" />
-            Balance
+          
+          <button className="flex items-center  w-[85%] ml-4 gap-14  hover:bg-white/10 cursor-pointer rounded-md ">
+          <p className="px-4 py-3 flex items-center gap-3 ">
+            <FiDollarSign className="text-lg" />
+            Balance 
           </p>
+           <IoIosArrowForward />
+          </button>
         </nav>
       </aside>
     </>

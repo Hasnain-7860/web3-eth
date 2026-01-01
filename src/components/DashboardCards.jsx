@@ -2,6 +2,8 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import green from "../assets/GreenLine.png";
 import color from "../assets/Color.png";
 import icon from "../assets/Icon.png";
+import add from "../assets/add.png";
+import bag from "../assets/bag.png";
 import { RiRobot2Line } from "react-icons/ri";
 
 
@@ -21,8 +23,12 @@ export default function DashboardCards() {
 
         <div className="flex justify-between items-center mt-10 xl:mt-16">
           <div className="flex gap-2">
-            <button className="w-7 h-7 rounded bg-white/20" />
-            <button className="w-7 h-7 rounded bg-white/20" />
+            <button className="w-7 h-7 rounded border bg-white/20 flex items-center justify-center">
+            <img src={add} alt="" />
+            </button>
+             <button className="w-7 h-7 rounded border bg-white/20 flex items-center justify-center">
+            <img src={bag} alt="" />
+            </button>
           </div>
           <button className="text-xs bg-[#3948E3] px-3 py-1.5 rounded">
             Upgrade
