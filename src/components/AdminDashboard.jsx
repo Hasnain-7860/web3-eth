@@ -31,7 +31,7 @@ const toggleView = (index, e) => {
 
 
   return (
-    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md " id="users">
+    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md  " >
     
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
   <h1 className="text-xl font-semibold text-white">
@@ -76,12 +76,12 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 <div>
                   <p className="font-medium leading-tight">{user.name}</p>
                   <div className="flex gap-2 text-xs mt-1">
-                    <button className="text-blue-400">Edit</button>
-                    <button className="text-red-400">Delete</button>
-                    <button className="text-green-400" onClick={(e) => toggleView(i, e)}>
+                    <button className="text-[#FFFFFF]">Edit</button>
+                    <button className="text-[#EDE0E0]">Delete</button>
+                    <button className="text-[#67E9E9]" onClick={(e) => toggleView(i, e)}>
                       View
                     </button>
-                    <button className="text-yellow-400">Ban</button>
+                    <button className="text-white-light">Ban</button>
                   </div>
                 </div>
               </div>

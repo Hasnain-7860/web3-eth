@@ -9,7 +9,7 @@ import { RiRobot2Line } from "react-icons/ri";
 
 export default function DashboardCards() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 p-5 xl:px-20" id="Dashboard">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 p-5 xl:px-20">
 
       <div className="rounded-xl p-5 pt-10 text-white bg-[linear-gradient(90deg,#2563eb_0%,#3b82f6_27%,#22d3ee_100%)] ">
         <div className="flex justify-between">
