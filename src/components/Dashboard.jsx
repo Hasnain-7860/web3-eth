@@ -1,3 +1,5 @@
+import AdminDashboard from "./AdminDashboard";
+import BlackListUsers from "./BlackListUsers";
 import DashboardCards from "./DashboardCards";
 
 export default function Dashboard() {
@@ -8,6 +10,8 @@ export default function Dashboard() {
       <div className="absolute bottom-20 left-1/2 w-24 h-24 bg-black/30 rounded-md" /> */}
 
     <DashboardCards/>
+    <AdminDashboard/>
+    <BlackListUsers/>
     </div>
   );
 }
