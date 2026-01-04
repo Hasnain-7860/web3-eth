@@ -1,6 +1,7 @@
 import AdminDashboard from "./AdminDashboard";
 import BlackListUsers from "./BlackListUsers";
 import DashboardCards from "./DashboardCards";
+import Faucet from "./Faucet";
 
 export default function Dashboard() {
   return (
@@ -12,6 +13,7 @@ export default function Dashboard() {
     <DashboardCards/>
     <AdminDashboard/>
     <BlackListUsers/>
+    <Faucet/>
     </div>
   );
 }

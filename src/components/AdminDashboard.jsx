@@ -1,6 +1,7 @@
 import { useState } from "react";
 import boypic from "../assets/boypic.png";
 import { Search, Plus, Minus } from "lucide-react";
+import HeaderAction from "./HeaderAction";
 
 const users = [
   { name: "Luke Ivory", image: boypic, tvl: "$20000", invoice: "#46894", token: "$56.07", points: 10000 },
@@ -12,36 +13,37 @@ const users = [
 ];
 
 export default function AdminDashboard() {
-  const [openUserIndex, setOpenUserIndex] = useState<number | null>(null);
-  const [activeRow, setActiveRow] = useState<number | null>(null);
+  const [openUserIndex, setOpenUserIndex] = useState(null);
+const [activeRow, setActiveRow] = useState(null);
+const [search, setSearch] = useState("");
+const filteredUsers = users.filter((user) =>
+  user.name.toLowerCase().includes(search.toLowerCase())
+);
 
-  const toggleView = (index: number, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    setActiveRow(index);
-    setOpenUserIndex(openUserIndex === index ? null : index);
-  };
+
+
+const toggleView = (index, e) => {
+  if (e) e.stopPropagation();
+
+  setActiveRow(index);
+  setOpenUserIndex(openUserIndex === index ? null : index);
+};
+
 
   return (
-    <div className="bg-gradient-to-br from-indigo-900 via-blue-900 to-cyan-800 p-4 sm:p-6 text-white md:m-7 xl:m-20">
+    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md">
     
-      <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6">
-        <h1 className="text-xl sm:text-2xl font-semibold">Admin Controls</h1>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-indigo-600 px-4 py-2 rounded">
-            <Plus size={16} /> Add Contact
-          </button>
-          <div className="relative">
-            <Search className="absolute left-3 top-2.5 text-gray-300" size={16} />
-            <input
-              className="pl-9 pr-4 py-2 rounded bg-indigo-800 text-sm outline-none"
-              placeholder="Search Users"
-            />
-          </div>
-        </div>
-      </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+  <h1 className="text-xl font-semibold text-white">
+    Admin Controls
+  </h1>
+
+  <HeaderAction onSearch={setSearch} />
+</div>
+
 
       
-      <div className="bg-indigo-950 rounded-xl overflow-hidden">
+      <div className="bg-[#0E0C69] rounded-xl overflow-hidden">
         
         <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr_1fr] px-6 py-3 gap-6 text-sm text-indigo-300">
           <div>Users</div>
@@ -51,7 +53,12 @@ export default function AdminDashboard() {
           <div>Points</div>
         </div>
 
-        {users.map((user, i) => (
+        {filteredUsers.length === 0 && (
+          <div className="text-center py-6 text-indigo-300">
+            No user found
+          </div>
+        )}
+        {filteredUsers.map((user, i) => (
           <div key={i} className="border-t border-indigo-800">
            
             <div
@@ -59,9 +66,10 @@ export default function AdminDashboard() {
     setActiveRow(i);
     setOpenUserIndex(null); 
   }}
-              className={`hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr_1fr] items-center px-6 py-4 cursor-pointer ${
-                activeRow === i ? "bg-indigo-600/40" : ""
-              }`}
+             className={`hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr_1fr] items-center px-6 py-4 
+hover:bg-[#5743ED] transition
+${activeRow === i ? "bg-[#5743ED]" : ""}`}
+
             >
               <div className="flex items-start gap-3">
                 <img src={user.image} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
@@ -93,7 +101,10 @@ export default function AdminDashboard() {
 
            
             <div
-              onClick={() => setActiveRow(i)}
+              onClick={() => {
+    setActiveRow(i);
+    setOpenUserIndex(null); 
+  }}
               className={`sm:hidden px-6 py-4 border-t border-indigo-800 cursor-pointer ${
                 activeRow === i ? "bg-indigo-600/40" : ""
               }`}
@@ -129,9 +140,9 @@ export default function AdminDashboard() {
             </div>
 
             {openUserIndex === i && (
-              <div className="bg-indigo-600/40 px-6 py-5 border-t border-indigo-400">
+              <div className="bg-[#0E0C69] px-6 py-5 border-t border-indigo-400">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="bg-indigo-500/60 rounded-xl p-4">
+                  <div className="bg-[#5743ED] rounded-xl p-4">
                     <h3 className="font-semibold mb-3">Recent Activities</h3>
                     <ul className="text-sm space-y-2">
                       <li className="flex justify-between">
@@ -152,7 +163,7 @@ export default function AdminDashboard() {
                   </div>
 
                  
-                  <div className="bg-indigo-500/60 rounded-xl p-4">
+                  <div className="bg-[#5743ED] rounded-xl p-4">
                     <div className="flex justify-between mb-3">
                       <h3 className="font-semibold">Wallet Balance</h3>
                       <span className="font-bold">$295</span>
