@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 
 export default function FaucetMint() {
   return (
-    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md">
+    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md" id="Balance">
         <h2 className="text-white text-[22px] mb-2">Faucet</h2>
       <div className="">
         <div className="rounded-md border border-indigo-500/40 bg-indigo-950 py-3 text-center text-white mb-4">

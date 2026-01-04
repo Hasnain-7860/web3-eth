@@ -31,7 +31,7 @@ const toggleView = (index, e) => {
 
 
   return (
-    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md">
+    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 text-white md:m-7 xl:m-20 rounded-md " id="users">
     
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
   <h1 className="text-xl font-semibold text-white">

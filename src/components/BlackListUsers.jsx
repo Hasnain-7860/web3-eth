@@ -28,7 +28,7 @@ export default function BlackListUsers() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 md:m-7 xl:m-20 rounded-md text-white">
+    <div className="bg-gradient-to-br from-[#2D37CA] via-[#2D37CA] to-[#1968C6] p-4 sm:p-6 md:m-7 xl:m-20 rounded-md text-white" id="Ban">
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h1 className="text-xl font-semibold">Black List Users</h1>
