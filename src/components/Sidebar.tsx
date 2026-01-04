@@ -6,6 +6,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
+  
 
   const linkClass =
     "flex items-center justify-between w-[85%] ml-4 px-4 py-3 rounded-md hover:bg-white/10 transition";
@@ -14,30 +15,35 @@ export default function Sidebar() {
     <>
       {/* Mobile Menu Button */}
       <button
-        className="fixed top-4 left-4 z-50 lg:hidden text-white"
-        onClick={() => setOpen(true)}
-      >
-        <HiMenu size={26} />
-      </button>
+  className="fixed top-4 left-4 z-[60] lg:hidden text-white bg-transparent"
+  onClick={() => setOpen(true)}
+>
+  <HiMenu size={26} />
+</button>
+
 
       {/* Overlay */}
-      {open && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-          onClick={() => setOpen(false)}
-        />
-      )}
+     {open && (
+  <div
+    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+    onClick={() => setOpen(false)}
+  />
+)}
+
 
       {/* Sidebar */}
       <aside
-        className={`
-          fixed top-0 left-0 h-full w-64 z-50
-          bg-gradient-to-b from-[#1d1c6b] to-[#18127A]
-          text-white transition-transform duration-300
-          ${open ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0
-        `}
-      >
+  className={`
+    fixed top-0 left-0 h-full w-64
+    z-50
+    bg-gradient-to-b from-[#1d1c6b] to-[#18127A]
+    text-white
+    transition-transform duration-300 ease-in-out
+    ${open ? "translate-x-0" : "-translate-x-full"}
+    lg:translate-x-0
+  `}
+>
+
         <nav className="mt-20 text-sm space-y-1">
           {/* Dashboard */}
           <a
