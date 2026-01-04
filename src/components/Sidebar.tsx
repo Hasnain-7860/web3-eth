@@ -10,7 +10,7 @@ export default function Sidebar() {
 
   const closeSidebar = () => setOpen(false);
 
-  // 🔥 CLASS FUNCTION (SIZE FIXED)
+  
   const menuClass = (name:any) =>
     `px-4 py-3 flex items-center justify-between w-[85%] ml-4 rounded-md
      text-base xl:text-[20px] transition-all
@@ -22,13 +22,16 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      
+      <div className=" ">
       <button
-        className="fixed top-4 left-4 z-50 lg:hidden text-white"
+        className="bg-black w-full h-[45px] fixed pl-3   z-50 lg:hidden text-white "
         onClick={() => setOpen(true)}
       >
         <HiMenu size={26} />
       </button>
+      
+      </div>
 
       {/* Backdrop */}
       {open && (
@@ -48,7 +51,7 @@ export default function Sidebar() {
           lg:translate-x-0
         `}
       >
-        <nav className="text-sm space-y-1 mt-20">
+        <nav className="text-sm space-y-1 mt-12">
           {/* Dashboard */}
           <a
             href="#Dashboard"
