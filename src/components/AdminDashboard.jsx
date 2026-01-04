@@ -142,49 +142,96 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
             {openUserIndex === i && (
               <div className="bg-[#0E0C69] px-6 py-5 border-t border-indigo-400">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="bg-[#5743ED] rounded-xl p-4">
-                    <h3 className="font-semibold mb-3">Recent Activities</h3>
-                    <ul className="text-sm space-y-2">
-                      <li className="flex justify-between">
-                        <span>Transaction</span>
-                        <span>2 min ago</span>
-                      </li>
-                      <li className="flex justify-between">
-                        <span>Refer a friend</span>
-                        <span>14:00</span>
-                      </li>
-                      <li className="flex justify-between">
-                        <span>Join community</span>
-                        <span>16:00</span>
-                      </li>
-                      <li>Deposit</li>
-                    </ul>
-                    <button className="mt-3 text-sm">View All →</button>
-                  </div>
+                <div className="bg-[#5743ED] rounded-xl p-5 text-white w-full ">
+  <div className="flex justify-between items-start mb-4">
+    <h3 className="text-base font-medium">Recent Activities</h3>
+    <button className="text-white text-xl font-bold">...</button>
+  </div>
+
+  <ul className="space-y-3 text-sm">
+    <li className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>
+        <span>Transaction</span>
+      </div>
+      <span className="text-xs text-gray-200">2 min ago</span>
+    </li>
+    <li className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>
+        <span>Refer a friend</span>
+      </div>
+      <span className="text-xs text-gray-200">14:00</span>
+    </li>
+    <li className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>
+        <span>Join community</span>
+      </div>
+      <span className="text-xs text-gray-200">16:00</span>
+    </li>
+    <li className="flex justify-between items-center">
+      <div className="flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>
+        <span>Deposit</span>
+      </div>
+      <span className="text-xs text-gray-200">—</span>
+    </li>
+  </ul>
+
+  <div className="mt-5 text-center flex flex-col  ">
+    <button className="text-[15px] flex items-center justify-center gap-1 text-white bg-[#2d2471] hover:bg-[#6C5AF1]">
+      View All <span className="text-[30px]">→</span>
+    </button>
+  </div>
+</div>
+
+
 
                  
-                  <div className="bg-[#5743ED] rounded-xl p-4">
-                    <div className="flex justify-between mb-3">
-                      <h3 className="font-semibold">Wallet Balance</h3>
-                      <span className="font-bold">$295</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 mb-3">
-                      <div className="bg-indigo-700 p-3 rounded">
-                        <p className="text-xs text-indigo-200">Received</p>
-                        <p>$97.99</p>
-                      </div>
-                      <div className="bg-indigo-700 p-3 rounded">
-                        <p className="text-xs text-indigo-200">Spent</p>
-                        <p>$53.00</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 flex-wrap">
-                      <button className="bg-indigo-800 px-4 py-2 rounded text-sm">View Details</button>
-                      <button className="bg-cyan-400 text-black px-4 py-2 rounded text-sm">
-                        Pay Now $29.51
-                      </button>
-                    </div>
-                  </div>
+                 <div className="bg-[#5743ED] rounded-xl p-4 text-white w-full ">
+  <div className="flex justify-between items-center mb-4">
+    <h3 className="font-medium text-sm opacity-90">Wallet Balance</h3>
+    <span className="font-semibold text-lg">$295</span>
+  </div>
+
+  <div className="grid grid-cols-2 gap-3 mb-4">
+    <div className="bg-[#6C5AF1] rounded-lg p-3 text-center">
+      <p className="text-xs opacity-80 mb-1">Received</p>
+      <p className="font-semibold">$97.99</p>
+    </div>
+
+    <div className="bg-[#6C5AF1] rounded-lg p-3 text-center">
+      <p className="text-xs opacity-80 mb-1">Spent</p>
+      <p className="font-semibold">$53.00</p>
+    </div>
+  </div>
+
+  <div className="flex items-center gap-2 mb-3">
+    <span className="bg-black/70 text-[10px] px-2 py-0.5 rounded-full">
+      Pending
+    </span>
+  </div>
+
+  <div className="flex justify-between items-center text-sm mb-4">
+    <div>
+      <p className="opacity-90">USDC</p>
+      <p className="text-xs opacity-70">DeFi</p>
+    </div>
+    <span className="font-medium">$15.66</span>
+  </div>
+
+  <div className="flex gap-3">
+    <button className="bg-[#3E32B8] px-4 py-2 rounded-md text-xs font-medium">
+      View Details
+    </button>
+
+    <button className="bg-cyan-400 px-4 py-2 rounded-md text-xs font-semibold text-black">
+      Pay Now $29.51
+    </button>
+  </div>
+</div>
+
                 </div>
               </div>
             )}
