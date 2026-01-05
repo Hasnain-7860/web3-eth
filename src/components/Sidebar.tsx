@@ -23,13 +23,16 @@ export default function Sidebar() {
   return (
     <>
       
-      <div className=" ">
+      <div className=" bg-black w-full h-[50px] fixed pl-3   z-50 lg:hidden text-white flex justify-between">
       <button
-        className="bg-black w-full h-[45px] fixed pl-3   z-50 lg:hidden text-white "
+        className=""
         onClick={() => setOpen(true)}
       >
-        <HiMenu size={26} />
+        <HiMenu size={26} />  
       </button>
+      <button className="bg-[#08d19f] text-white text-md px-4 my-1  rounded-full  ">
+            Connect Wallet
+          </button>
       
       </div>
 
