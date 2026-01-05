@@ -1,18 +1,23 @@
 import { ethers } from "ethers";
+import abi from "../Abi.json"
  
 
 const provider = new ethers.JsonRpcProvider(
-  "https://11155111.rpc.thirdweb.com/${THIRDWEB_API_KEY}"
+  "https://11155111.rpc.thirdweb.com/d6ae8f42ef1b856dc9315a9098a12266"
 );
  
 
 const contractAddress = "0x46E19Aebe476dF7C789F1e6b4d496904A96880B7";
-const abi = [
-  "function getBalance(address) view returns (uint256)"
-];
+
+
  
-const contract = new ethers.Contract(contractAddress, abi, provider);
+export const contract = new ethers.Contract(contractAddress, abi, provider);
+
+const iface = new ethers.Interface(abi);
  
-const balance = await contract.getBalance("0xUSER_ADDRESS");
+const functions = iface.fragments
+  .filter(f => f.type === "function")
+  .map(f => f.format());
  
-console.log("Balance:", balance.toString());
+console.log(functions);
+ 
