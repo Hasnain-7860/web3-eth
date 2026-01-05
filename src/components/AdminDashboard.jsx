@@ -67,7 +67,7 @@ const toggleView = (index, e) => {
     setOpenUserIndex(null); 
   }}
              className={`hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr_1fr] items-center px-6 py-4 
-hover:bg-[#5743ED] transition
+ transition
 ${activeRow === i ? "bg-[#5743ED]" : ""}`}
 
             >
@@ -89,11 +89,13 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
               <div>{user.invoice}</div>
               <div>{user.token}</div>
               <div className="flex items-center gap-2">
-                <button className="bg-indigo-800 p-1 rounded">
+                <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Minus size={14} />
                 </button>
-                <span className="bg-indigo-700 px-3 py-1 rounded text-sm">{user.points}</span>
-                <button className="bg-indigo-800 p-1 rounded">
+                <div className="bg-indigo-700 w-[70px] rounded-md ">
+                <span className="flex items-center justify-center  py-1 rounded text-sm ">{user.points}</span>
+                </div>
+                <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Plus size={14} />
                 </button>
               </div>

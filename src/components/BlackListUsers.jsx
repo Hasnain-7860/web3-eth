@@ -3,7 +3,15 @@ import boypic from "../assets/boypic.png";
 import HeaderActions from "./HeaderActions";
 
 const initialUsers = [
-  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 0, image: boypic, active: false },
+  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 10, image: boypic, active: true },
+  { name: "John Doe", email: "john@gmail.com", lp: "$100.00", points: 50, image: boypic, active: true },
+  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 10, image: boypic, active: true },
+  { name: "John Doe", email: "john@gmail.com", lp: "$100.00", points: 50, image: boypic, active: true },
+  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 10, image: boypic, active: true },
+  { name: "John Doe", email: "john@gmail.com", lp: "$100.00", points: 50, image: boypic, active: true },
+  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 10, image: boypic, active: true },
+  { name: "John Doe", email: "john@gmail.com", lp: "$100.00", points: 50, image: boypic, active: true },
+  { name: "Noemi Roberts", email: "noe@gmail.com", lp: "$56.07", points: 10, image: boypic, active: true },
   { name: "John Doe", email: "john@gmail.com", lp: "$100.00", points: 50, image: boypic, active: true },
 ];
 
@@ -11,7 +19,7 @@ export default function BlackListUsers() {
   const [search, setSearch] = useState("");
   const [users] = useState(initialUsers);
 
-  // ✅ Sirf ACTIVE users
+  
   const filteredUsers = users.filter(
     (user) =>
       user.active &&
