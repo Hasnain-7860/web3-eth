@@ -1,6 +1,7 @@
 import { ConnectButton } from "thirdweb/react";
 import { createThirdwebClient } from "thirdweb";
 import { inAppWallet, createWallet } from "thirdweb/wallets";
+import { sepolia, polygon, mainnet } from "thirdweb/chains";
 
 const client = createThirdwebClient({
   clientId: import.meta.env.VITE_CLIENT_ID||"",
@@ -31,6 +32,7 @@ const wallets = [
 function Wallet({ title }) {
   return (
     <ConnectButton
+    // chain={11155111}
       client={client}
       wallets={wallets}
       connectModal={{ size: "compact" }}

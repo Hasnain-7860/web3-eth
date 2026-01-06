@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import abi from "../Abi.json"
+import abi from '../Abi.json'
  
 
 const provider = new ethers.JsonRpcProvider(
@@ -7,7 +7,7 @@ const provider = new ethers.JsonRpcProvider(
 );
  
 
-const contractAddress = "0x46E19Aebe476dF7C789F1e6b4d496904A96880B7";
+const contractAddress = "0xAB551506b8245cf40908554d82cDb38D14C86A92";
 
 
  
