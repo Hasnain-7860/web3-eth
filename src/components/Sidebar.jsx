@@ -3,6 +3,7 @@ import { HiHome, HiMenu } from "react-icons/hi";
 import { LuUsers } from "react-icons/lu";
 import { FiDollarSign } from "react-icons/fi";
 import { IoIosArrowForward } from "react-icons/io";
+import Wallet from "../../Wallet";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function Sidebar() {
   const closeSidebar = () => setOpen(false);
 
   
-  const menuClass = (name:any) =>
+  const menuClass = (name) =>
     `px-4 py-3 flex items-center justify-between w-[85%] ml-4 rounded-md
      text-base xl:text-[20px] transition-all
      ${
@@ -23,16 +24,14 @@ export default function Sidebar() {
   return (
     <>
       
-      <div className=" bg-black w-full h-[50px] fixed pl-3   z-50 lg:hidden text-white flex justify-between">
+      <div className=" bg-black w-full h-[58px] fixed pl-3   z-50 lg:hidden text-white flex justify-between items-center">
       <button
         className=""
         onClick={() => setOpen(true)}
       >
         <HiMenu size={26} />  
       </button>
-      <button className="bg-[#08d19f] text-white text-md px-4 my-1  rounded-full  ">
-            Connect Wallet
-          </button>
+          <Wallet/>
       
       </div>
 
