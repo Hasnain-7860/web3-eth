@@ -2,6 +2,7 @@ import { useState } from "react";
 import boypic from "../assets/boypic.png";
 import { Search, Plus, Minus } from "lucide-react";
 import HeaderAction from "./HeaderAction";
+import {list} from "../../utils/eathers"
 
 const users = [
   { name: "Luke Ivory", image: boypic, tvl: "$20000", invoice: "#46894", token: "$56.07", points: 10000 },
@@ -47,8 +48,8 @@ const toggleView = (index, e) => {
         
         <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr_1fr_1fr] px-6 py-3 gap-6 text-sm text-indigo-300">
           <div>Users</div>
-          <div>TVL</div>
-          <div>Invoice</div>
+          <div>Uid</div>
+          <div>Address</div>
           <div>LP Token</div>
           <div>Points</div>
         </div>
@@ -87,13 +88,13 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
               </div>
               <div>{user.tvl}</div>
               <div>{user.invoice}</div>
-              <div>{user.token}</div>
+              <div>$25.78</div>
               <div className="flex items-center gap-2">
                 <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Minus size={14} />
                 </button>
                 <div className="bg-indigo-700 w-[70px] rounded-md ">
-                <span className="flex items-center justify-center  py-1 rounded text-sm ">{user.points}</span>
+                <span className="flex items-center justify-center  py-1 rounded text-sm ">10</span>
                 </div>
                 <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Plus size={14} />
@@ -115,11 +116,11 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 <img src={user.image} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
                 <div className="col-span-2 font-medium">{user.name}</div>
                 <div>
-                  <p className="text-indigo-300 text-xs">TVL</p>
+                  <p className="text-indigo-300 text-xs">Uid</p>
                   {user.tvl}
                 </div>
                 <div>
-                  <p className="text-indigo-300 text-xs">Invoice</p>
+                  <p className="text-indigo-300 text-xs">Address</p>
                   {user.invoice}
                 </div>
                 <div>
@@ -128,7 +129,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 </div>
                 <div>
                   <p className="text-indigo-300 text-xs">Points</p>
-                  {user.points}
+                  10
                 </div>
               </div>
               <div className="flex gap-4 text-xs pt-3">

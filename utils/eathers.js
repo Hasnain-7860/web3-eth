@@ -1,23 +1,23 @@
 import { ethers } from "ethers";
 import abi from '../Abi.json'
  
-const contractAddress = "0xAB551506b8245cf40908554d82cDb38D14C86A92"; 
+const contractAddress = "0xAB551506b8245cf40908554d82cDb38D14C86A92";
+const clientId = import.meta.env.VITE_CLIENT_ID;
 const provider = new ethers.JsonRpcProvider(
-  "https://11155111.rpc.thirdweb.com/d6ae8f42ef1b856dc9315a9098a12266"
+  `https://11155111.rpc.thirdweb.com/${clientId}`
 );
  
-const signer = new ethers.Wallet(
- "745c15fc990581207ac86cbfdca1e8f97c20715e0774e6d72ed6054bde5e4cd4",
-  provider
-);
-
-export const writeContract = new ethers.Contract(                //write
+const privateKey = import.meta.env.VITE_OWNER_PRIVATE_KEY;
+if (!privateKey) {
+  throw new Error("Missing VITE_OWNER_PRIVATE_KEY in .env");
+}
+ 
+const signer = new ethers.Wallet(privateKey, provider);
+export const writeContract = new ethers.Contract(
   contractAddress,
   abi,
   signer,
 );
-
-
 // const tx = await contract.transfer(
 //   to,
 //   amount,
@@ -27,22 +27,20 @@ export const writeContract = new ethers.Contract(                //write
 //     maxPriorityFeePerGas: ethers.parseUnits("2", "gwei")
 //   }
 // );
-
+ 
 // const contactInstance =((contractAddress)=>{
 //   const dianimicContract =  new ethers.Contract(contractAddress, abi, provider);
 //   return dianimicContract
 // })
  
-
-export const readContract = new ethers.Contract(contractAddress, abi, provider);   //read
-
-const iface = new ethers.Interface(abi);
  
-const functions = iface.fragments
-  .filter(f => f.type === "function")
-  .map(f => f.format());
+export const readContract = new ethers.Contract(contractAddress, abi, provider);
  
-console.log(functions);
-
-
+export const getOwner = async () => readContract.owner();
+export const getSignerAddress = async () => signer.address;
+export const list = async (address) => {
+  return await readContract.addressToContactInfo(address);
+};
+ 
+ 
  

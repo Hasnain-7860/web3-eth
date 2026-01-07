@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { UserPlus, X } from "lucide-react";
+import toast from "react-hot-toast";
+import { writeContract, getOwner, getSignerAddress } from "../../utils/eathers";
+import abi from "../../Abi.json";
 
-// 🔹 Contract details
 const CONTRACT_ADDRESS = "0xAB551506b8245cf40908554d82cDb38D14C86A92";
-const ABI = [
-  "function addContact(string name,string imageUri,string uid) external returns(address)"
-];
 
 export default function AddContactModal() {
   const [open, setOpen] = useState(false);
@@ -15,66 +14,77 @@ export default function AddContactModal() {
   const [uid, setUid] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const handleImage = (e) => {
-    const file = e.target.files[0];
-    if (file) setImage(URL.createObjectURL(file));
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setImage(reader.result); // ✅ base64 string
   };
-
-  // 🔹 Blockchain call (transferToken style)
- const addContact = async () => {
-  try {
-    if (!window.ethereum) throw new Error("MetaMask not found");
-
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-
-    const provider = new ethers.BrowserProvider(window.ethereum, "any");
-    const signer = await provider.getSigner();
-
-    const contract = new ethers.Contract(
-      CONTRACT_ADDRESS, // MUST be 0x...
-      ABI,
-      signer
-    );
-
-    const tx = await contract.addContact(
-      name,
-      image || "",
-      uid
-    );
-
-    console.log("TX sent:", tx.hash);
-    await tx.wait();
-    console.log("Contact added");
-
-  } catch (err) {
-    console.error(
-      "Add contact failed:",
-      err.reason || err.message
-    );
-  }
+  reader.readAsDataURL(file);
 };
 
-// const addContact = async () => {
-//   console.log("FAKE SAVE (no blockchain)");
 
-//   console.log({
-//     name,
-//     image,
-//     uid,
-//   });
+  const addContact = async () => {
+    try {
+      setLoading(true);
 
-//   // simulate delay
-//   await new Promise((res) => setTimeout(res, 800));
+      const signerAddr = await getSignerAddress();
+      const owner = await getOwner();
 
-//   alert("Contact saved locally (no gas)");
+      console.log({ signerAddr, owner });
 
-//   setOpen(false);
-// };
+     const imageUri = image || "";
+
+      const tx = await writeContract.addContact(
+        name || "",
+        imageUri,
+        uid || ""
+      );
+
+      // ⏳ Wait for blockchain confirmation
+      const receipt = await tx.wait();
+
+      // ✅ SUCCESS TOAST
+      toast.success("Contact added successfully 🎉");
+
+      console.log("✅ Contact Saved Successfully");
+      console.log({
+        name,
+        uid,
+        imageUri,
+        txHash: receipt.hash,
+        blockNumber: receipt.blockNumber,
+      });
+
+      // 🔄 Reset UI
+      setOpen(false);
+      setName("");
+      setUid("");
+      setImage(null);
+    } catch (err) {
+      toast.error("Failed to add contact ❌");
+
+      try {
+        const i = new ethers.Interface(abi);
+        if (err?.data) {
+          const parsed = i.parseError(err.data);
+          console.error("Add contact failed:", parsed?.name);
+        } else {
+          console.error("Add contact failed:", err.reason || err.message);
+        }
+      } catch {
+        console.error("Add contact failed:", err.reason || err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
-     
+      {/* Add Contact Button */}
       <button
         onClick={() => setOpen(true)}
         className="flex items-center gap-2 px-4 py-2 rounded-lg
@@ -84,7 +94,7 @@ export default function AddContactModal() {
         Add Contact
       </button>
 
-      
+      {/* Modal */}
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center
@@ -97,7 +107,7 @@ export default function AddContactModal() {
             bg-gradient-to-br from-[#0b1026] to-[#111827]
             border border-blue-900/40"
           >
-            
+            {/* Close */}
             <button
               onClick={() => setOpen(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white"
@@ -109,17 +119,20 @@ export default function AddContactModal() {
               Add New Contact
             </h2>
 
-            
+            {/* Image */}
             <div className="flex justify-center mb-6">
               <label className="cursor-pointer">
                 {image ? (
                   <img
                     src={image}
+                    alt="preview"
                     className="w-24 h-24 rounded-full object-cover border"
                   />
                 ) : (
-                  <div className="w-24 h-24 rounded-full bg-[#020617]
-                  border flex items-center justify-center text-gray-400">
+                  <div
+                    className="w-24 h-24 rounded-full bg-[#020617]
+                    border flex items-center justify-center text-gray-400"
+                  >
                     Upload
                   </div>
                 )}
@@ -132,7 +145,7 @@ export default function AddContactModal() {
               </label>
             </div>
 
-           
+            {/* Inputs */}
             <div className="space-y-4">
               <input
                 value={name}
@@ -151,7 +164,7 @@ export default function AddContactModal() {
               />
             </div>
 
-            
+            {/* Actions */}
             <div className="flex justify-end gap-3 mt-6">
               <button
                 onClick={() => setOpen(false)}
