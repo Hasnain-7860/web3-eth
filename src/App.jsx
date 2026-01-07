@@ -12,7 +12,7 @@ export default function App() {
     const result=await readContract.listeners()
      const results =await writeContract.listeners()
     
-console.log( results,"result")
+// console.log( results,"result")
   })
 
   useEffect(()=>{

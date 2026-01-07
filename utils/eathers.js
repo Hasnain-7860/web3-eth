@@ -18,6 +18,14 @@ export const writeContract = new ethers.Contract(
   abi,
   signer,
 );
+// export const writeContracts = new ethers.Block(
+//   contractAddress,
+//   abi,
+//   signer,
+// );
+
+
+
 // const tx = await contract.transfer(
 //   to,
 //   amount,
@@ -38,9 +46,10 @@ export const readContract = new ethers.Contract(contractAddress, abi, provider);
  
 export const getOwner = async () => readContract.owner();
 export const getSignerAddress = async () => signer.address;
-export const list = async (address) => {
-  return await readContract.addressToContactInfo(address);
-};
+export const list = () => readContract.getAllContactAddresses();
+export const list1 = () => readContract.addressToContactInfo();
+
+
  
  
  

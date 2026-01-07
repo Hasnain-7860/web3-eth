@@ -33,7 +33,7 @@ export default function AddContactModal() {
       const signerAddr = await getSignerAddress();
       const owner = await getOwner();
 
-      console.log({ signerAddr, owner });
+      // console.log({ signerAddr, owner });
 
      const imageUri = image || "";
 
@@ -43,11 +43,11 @@ export default function AddContactModal() {
         uid || ""
       );
 
-      // ⏳ Wait for blockchain confirmation
+      
       const receipt = await tx.wait();
 
-      // ✅ SUCCESS TOAST
-      toast.success("Contact added successfully 🎉");
+     
+      toast.success("Contact added successfully");
 
       console.log("✅ Contact Saved Successfully");
       console.log({
@@ -64,7 +64,7 @@ export default function AddContactModal() {
       setUid("");
       setImage(null);
     } catch (err) {
-      toast.error("Failed to add contact ❌");
+      toast.error("Failed to add contact");
 
       try {
         const i = new ethers.Interface(abi);

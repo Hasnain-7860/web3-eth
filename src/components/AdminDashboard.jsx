@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import boypic from "../assets/boypic.png";
 import { Search, Plus, Minus } from "lucide-react";
 import HeaderAction from "./HeaderAction";
-import {list} from "../../utils/eathers"
+import { list,  readContract } from "../../utils/eathers";
+import { Copy } from "lucide-react";
+import toast from "react-hot-toast";
+import Ban from "./Ban";
 
 const users = [
   { name: "Luke Ivory", image: boypic, tvl: "$20000", invoice: "#46894", token: "$56.07", points: 10000 },
@@ -16,10 +19,62 @@ const users = [
 export default function AdminDashboard() {
   const [openUserIndex, setOpenUserIndex] = useState(null);
 const [activeRow, setActiveRow] = useState(null);
+ const [contacts, setContacts] = useState([]); 
 const [search, setSearch] = useState("");
-const filteredUsers = users.filter((user) =>
+const filteredUsers = contacts.filter((user) =>
   user.name.toLowerCase().includes(search.toLowerCase())
 );
+const shortAddress = (addr) =>
+  addr ? `${addr.slice(0, 3)}...${addr.slice(-4)}` : "";
+
+const copyAddress = (addr) => {
+  navigator.clipboard.writeText(addr);
+  toast.success("Address copied");
+};
+
+
+
+useEffect(() => {
+  const getData = async () => {
+    try {
+      const addresses = await readContract.getAllContactAddresses();
+
+      const formattedContacts = await Promise.all(
+        addresses.map(async (addr) => {
+          const data = await readContract.addressToContactInfo(addr);
+
+          if (!data.exists) return null;
+
+          return {
+            name: data.name,
+            imageUrl: data.imageUri && data.imageUri !== "" ? data.imageUri : boypic,
+            uid: data.uid,
+            contactAddress: data.contactAddress,
+            invoice: "#46894",
+            token: "$56.07",
+            points: 1000,
+          };
+        })
+      );
+
+      const finalData = formattedContacts.filter(Boolean);
+
+      console.log("✅ CONTRACT CONTACTS:", finalData);
+
+      setContacts(finalData);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    }
+  };
+
+  getData();
+}, []);
+
+
+
+
+
+
 
 
 
@@ -73,7 +128,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
 
             >
               <div className="flex items-start gap-3">
-                <img src={user.image} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
+                <img src={user.imageUrl} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
                 <div>
                   <p className="font-medium leading-tight">{user.name}</p>
                   <div className="flex gap-2 text-xs mt-1">
@@ -82,19 +137,26 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                     <button className="text-[#67E9E9]" onClick={(e) => toggleView(i, e)}>
                       View
                     </button>
-                    <button className="text-white-light">Ban</button>
+                    <Ban/>
                   </div>
                 </div>
               </div>
-              <div>{user.tvl}</div>
-              <div>{user.invoice}</div>
-              <div>$25.78</div>
+              <div>{user.uid}</div>
+             <div className="flex items-center gap-2">
+            <span>{shortAddress(user.contactAddress)}</span>
+             <Copy
+               size={16}
+               className="cursor-pointer text-gray-500 hover:text-black"
+               onClick={() => copyAddress(user.contactAddress)}
+                />
+                </div>
+              <div>{user.token}</div>
               <div className="flex items-center gap-2">
                 <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Minus size={14} />
                 </button>
                 <div className="bg-indigo-700 w-[70px] rounded-md ">
-                <span className="flex items-center justify-center  py-1 rounded text-sm ">10</span>
+                <span className="flex items-center justify-center  py-1 rounded text-sm ">{user.points}</span>
                 </div>
                 <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
                   <Plus size={14} />
@@ -113,15 +175,22 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
               }`}
             >
               <div className="grid grid-cols-2 gap-y-2 gap-x-6 text-sm">
-                <img src={user.image} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
+                <img src={user.imageUrl} alt={user.name} className="w-10 h-10 rounded-md object-cover" />
                 <div className="col-span-2 font-medium">{user.name}</div>
                 <div>
-                  <p className="text-indigo-300 text-xs">Uid</p>
+                  <p className="text-indigo-300 text-xs">TVL</p>
                   {user.tvl}
                 </div>
                 <div>
                   <p className="text-indigo-300 text-xs">Address</p>
-                  {user.invoice}
+                  <div className="flex items-center gap-2">
+            <span>{shortAddress(user.contactAddress)}</span>
+             <Copy
+               size={16}
+               className="cursor-pointer text-gray-500 hover:text-black"
+               onClick={() => copyAddress(user.contactAddress)}
+                />
+                </div>
                 </div>
                 <div>
                   <p className="text-indigo-300 text-xs">LP Token</p>
@@ -129,7 +198,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 </div>
                 <div>
                   <p className="text-indigo-300 text-xs">Points</p>
-                  10
+                  {user.points}
                 </div>
               </div>
               <div className="flex gap-4 text-xs pt-3">
@@ -138,7 +207,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 <button className="text-green-400" onClick={(e) => toggleView(i, e)}>
                   View
                 </button>
-                <button className="text-yellow-400">Ban</button>
+                <Ban/>
               </div>
             </div>
 
