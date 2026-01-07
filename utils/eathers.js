@@ -51,6 +51,10 @@ export const getSignerAddress = async () => signer.address;
 export const list = () => readContract.getAllContactAddresses();
 export const list1 = () => readContract.addressToContactInfo();
 export const list2 = () => readContract.blockedContacts();
+export const list3 = () => readContract.getContactCount();
+export const list4 = () => readContract.totalBalanceAcrossAllContacts();
+
+
 
 
  

@@ -5,17 +5,71 @@ import icon from "../assets/Icon.png";
 import add from "../assets/add.png";
 import bag from "../assets/bag.png";
 import { RiRobot2Line } from "react-icons/ri";
+import { useEffect, useState } from "react";
+import { readContract } from "../../utils/eathers"; 
+
+
 
 
 export default function DashboardCards() {
+
+   const [totalUsers, setTotalUsers] = useState("0");
+  const [loading, setLoading] = useState(true);
+   const [tvl, setTvl] = useState("0.00");
+  
+
+  useEffect(() => {
+    const fetchTotalUsers = async () => {
+      try {
+        const count = await readContract.getContactCount();
+
+        // ethers returns BigInt → convert to string
+        setTotalUsers(count.toString());
+      } catch (error) {
+        console.error("Failed to fetch user count:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTotalUsers();
+  }, []);
+  useEffect(() => {
+    const fetchTVL = async () => {
+      try {
+        const totalBalanceWei =
+          await readContract.totalBalanceAcrossAllContacts();
+
+        // Convert wei → ETH
+        const ethValue = ethers.formatEther(totalBalanceWei);
+
+        // Format to 2 decimals
+        setTvl(Number(ethValue).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }));
+      } catch (err) {
+        console.error("Failed to fetch TVL:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTVL();
+  }, []);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20 p-5 xl:px-20">
 
       <div className="rounded-xl p-5 pt-10 text-white bg-[linear-gradient(90deg,#2563eb_0%,#3b82f6_27%,#22d3ee_100%)] ">
-        <div className="flex justify-between">
-          <p className="text-sm md:text-lg xl:text-[22px] ">Total Value Locked</p>
-          <h2 className="text-2xl font-semibold">$ 41,741.42</h2>
-        </div>
+       <div className="flex justify-between">
+      <p className="text-sm md:text-lg xl:text-[22px]">
+        Total Value Locked
+      </p>
+
+      <h2 className="text-2xl font-semibold">
+        {loading ? "Loading..." : `$ ${tvl}`}
+      </h2>
+    </div>
         <div className="flex justify-between">
           <p className="text-sm md:text-lg xl:text-[22px] ">(TVL)</p>
           <span className="text-xs bg-[#3948E3] px-3 py-1.5 rounded">+2453</span>
@@ -83,10 +137,15 @@ export default function DashboardCards() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-sm">
-          <div >
-            <p className="font-semibold opacity-90 xl:text-[19px]">Total Users registered:</p>
-            <p className=" text-cyan-400 font-semibold pt-2 xl:text-[18px]">423,964</p>
-          </div>
+         <div>
+      <p className="font-semibold opacity-90 xl:text-[19px]">
+        Total Users registered:
+      </p>
+
+      <p className="text-cyan-400 font-semibold pt-2 xl:text-[18px]">
+        {loading ? "Loading..." : totalUsers}
+      </p>
+    </div>
           <div>
             <p className="font-semibold opacity-90 xl:text-[19px]">Daily Transactions</p>
             <p className="text-[18px] text-cyan-400 font-semibold pt-2">7,929</p>
