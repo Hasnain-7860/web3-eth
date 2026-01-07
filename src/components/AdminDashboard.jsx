@@ -18,6 +18,7 @@ const users = [
 
 export default function AdminDashboard() {
   const [openUserIndex, setOpenUserIndex] = useState(null);
+  // const users = readContract.getAllUsers();
 const [activeRow, setActiveRow] = useState(null);
  const [contacts, setContacts] = useState([]); 
 const [search, setSearch] = useState("");
@@ -136,7 +137,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                     <button className="text-[#67E9E9]" onClick={(e) => toggleView(i, e)}>
                       View
                     </button>
-                    <Ban/>
+                    <Ban  uid={user.uid} />
                   </div>
                 </div>
               </div>
@@ -206,7 +207,7 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 <button className="text-green-400" onClick={(e) => toggleView(i, e)}>
                   View
                 </button>
-                <Ban/>
+                <Ban  uid={user.uid}/>
               </div>
             </div>
 

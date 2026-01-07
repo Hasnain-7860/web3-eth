@@ -50,6 +50,7 @@ export const getOwner = async () => readContract.owner();
 export const getSignerAddress = async () => signer.address;
 export const list = () => readContract.getAllContactAddresses();
 export const list1 = () => readContract.addressToContactInfo();
+export const list2 = () => readContract.blockedContacts();
 
 
  
