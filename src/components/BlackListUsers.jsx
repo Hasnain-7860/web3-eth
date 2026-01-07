@@ -1,49 +1,48 @@
 import { useEffect, useState } from "react";
 import boypic from "../assets/boypic.png";
 import HeaderActions from "./HeaderActions";
-import { readContract, list2 } from "../../utils/eathers";
+import { readContract } from "../../utils/eathers";
+
 
 export default function BlackListUsers() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const fetchBlockedUsers = async () => {
-    try {
-      // 🔥 BLOCKED ADDRESSES
-      const blockedAddresses = await list2();
 
-      console.log("🚫 BLOCKED ADDRESSES:", blockedAddresses);
+ const fetchBlockedUsers = async () => {
+  try {
+    setLoading(true);
 
-      const formattedUsers = await Promise.all(
-        blockedAddresses.map(async (addr) => {
-          const data = await readContract.addressToContactInfo(addr);
+    const allAddresses = await readContract.getAllContactAddresses();
+    const blockedUsers = [];
 
-          if (!data.exists) return null;
+    for (let addr of allAddresses) {
+      const data = await readContract.addressToContactInfo(addr);
+      if (!data.exists) continue;
 
-          return {
-            name: data.name,
-            email: data.email || "-", // agar chain me nahi h
-            lp: "$56.07",
-            points: data.points || 0,
-            image:
-              data.imageUri && data.imageUri !== ""
-                ? data.imageUri
-                : boypic,
-            uid: data.uid,
-            contactAddress: addr,
-          };
-        })
-      );
+      const isBlocked = await readContract.isContactBlocked(data.uid);
+      if (!isBlocked) continue;
 
-      const finalData = formattedUsers.filter(Boolean);
-
-      console.log("✅ BLOCKED USERS DATA:", finalData);
-
-      setUsers(finalData);
-    } catch (err) {
-      console.error("❌ Error fetching blocked users:", err);
+      blockedUsers.push({
+        name: data.name,
+        email: "-",
+        lp: "$56.07",
+        points: 0,
+        image: data.imageUri && data.imageUri !== "" ? data.imageUri : boypic,
+        uid: data.uid,
+        contactAddress: addr,
+      });
     }
-  };
+
+    setUsers(blockedUsers);
+  } catch (err) {
+    console.error("❌ Error fetching blocked users:", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchBlockedUsers();
@@ -63,41 +62,57 @@ export default function BlackListUsers() {
       </div>
 
       <div className="overflow-x-auto rounded-xl bg-indigo-900">
-        <table className="w-full min-w-[600px]">
+        <table className="w-full text-left min-w-[600px]">
           <thead className="bg-[#0E0C69] text-indigo-200">
             <tr>
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">Email</th>
               <th className="px-6 py-3">LP</th>
               <th className="px-6 py-3">Points</th>
+               <th className="px-6 py-3">Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredUsers.length ? (
-              filteredUsers.map((user, i) => (
-                <tr key={i} className="bg-[#5743ED] hover:bg-[#6D57FF]">
-                  <td className="flex items-center gap-3 px-6 py-4">
-                    <img src={user.image} className="w-10 h-10 rounded-md" />
-                    {user.name}
-                  </td>
-                  <td className="px-6 py-4 text-indigo-200">{user.email}</td>
-                  <td className="px-6 py-4">{user.lp}</td>
-                  <td className="px-6 py-4">
-                    <span className="px-2 py-1 rounded bg-red-500">
-                      {user.points}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center py-6 text-indigo-200">
-                  No blocked users found
-                </td>
-              </tr>
-            )}
-          </tbody>
+  {loading ? (
+    <tr>
+      <td colSpan="5" className="py-10 text-center">
+        <div className="flex justify-center items-center gap-2">
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-indigo-200">Loading blocked users...</span>
+        </div>
+      </td>
+    </tr>
+  ) : filteredUsers.length ? (
+    filteredUsers.map((user, i) => (
+      <tr key={i} className="bg-[#5743ED] hover:bg-[#6D57FF]">
+        <td className="flex items-center gap-3 px-6 py-4">
+          <img src={user.image} className="w-10 h-10 rounded-md" />
+          {user.name}
+        </td>
+        <td className="px-6 py-4 text-indigo-200">{user.email}</td>
+        <td className="px-6 py-4">{user.lp}</td>
+        <td className="px-6 py-4">
+          <span className="px-2 py-1 rounded bg-red-500">
+            {user.points}
+          </span>
+        </td>
+        <td className="px-6 py-4 flex gap-2">
+          <button className="px-3 py-1 border rounded hover:bg-blue-500">
+            Unblock
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5" className="text-center py-6 text-indigo-200">
+        No blocked users found
+      </td>
+    </tr>
+  )}
+</tbody>
+
         </table>
       </div>
     </div>

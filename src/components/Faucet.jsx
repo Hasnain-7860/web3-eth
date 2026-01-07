@@ -16,7 +16,7 @@ export default function FaucetMint() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 ">
             <input
-              placeholder="Assets"
+              placeholder="Address"
               className="rounded-md  bg-indigo-700 px-3 py-2 text-sm text-white placeholder-white/70 outline-none h-[38px]"
             />
             <input

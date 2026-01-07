@@ -22,30 +22,35 @@ export default function Ban({ uid }) {
     fetchBlockStatus();
   }, [uid]);
 
-  const handleAction = async () => {
-    if (!uid) return toast.error("UID is missing!");
+const handleAction = async () => {
+  if (!uid) return toast.error("UID is missing!");
 
-    setLoading(true);
-    try {
-      const signerAddress = await getSignerAddress();
+  const prevState = isBlocked;   // rollback ke liye
+  setIsBlocked(!prevState);      // ⚡ INSTANT UI CHANGE
+  setLoading(true);
+  setOpen(false);
 
-      if (isBlocked) {
-        await writeContract.unblockContact(uid, { from: signerAddress });
-        toast.success("User unblocked successfully!");
-      } else {
-        await writeContract.blockContact(uid, { from: signerAddress });
-        toast.success("User banned successfully!");
-      }
-
-      setIsBlocked(!isBlocked); // toggle state
-    } catch (err) {
-      console.error(err);
-      toast.error("Transaction failed!");
+  try {
+    let tx;
+    if (prevState) {
+      tx = await writeContract.unblockContact(uid);
+      toast.success("User unblocked successfully!");
+    } else {
+      tx = await writeContract.blockContact(uid);
+      toast.success("User banned successfully!");
     }
 
-    setLoading(false);
-    setOpen(false);
-  };
+    await tx.wait();             // background confirm
+  } catch (err) {
+    console.error(err);
+    setIsBlocked(prevState);     // ❌ rollback
+    toast.error("Transaction failed!");
+  }
+
+  setLoading(false);
+};
+
+
 
   return (
     <>
