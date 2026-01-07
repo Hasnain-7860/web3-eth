@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Dashboard from "./components/Dashboard";
 import Sidebar from "./components/Sidebar";
-import { contract } from "../utils/eathers";
+import {readContract, writeContract } from "../utils/eathers";
 import { useSwitchActiveWalletChain } from "thirdweb/react";
 import { sepolia, polygon, mainnet } from "thirdweb/chains";
 
@@ -9,9 +9,10 @@ import { sepolia, polygon, mainnet } from "thirdweb/chains";
 export default function App() {
   const switchChain = useSwitchActiveWalletChain();
   const contractInfo=(async()=>{
-    const result=await contract.listeners()
+    const result=await readContract.listeners()
+     const results =await writeContract.listeners()
     
-console.log( result,"result")
+console.log( results,"result")
   })
 
   useEffect(()=>{
