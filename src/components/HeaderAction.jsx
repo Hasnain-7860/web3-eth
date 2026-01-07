@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UserPlus, List, Grid, Search } from "lucide-react";
 import Popopadd from "./Popopadd";
 
-export default function HeaderAction({ onSearch }) {
+export default function HeaderAction({ onSearch,fetchContacts}) {
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -14,7 +14,7 @@ export default function HeaderAction({ onSearch }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
       <div className="flex items-center gap-3">
-       <Popopadd/>
+       <Popopadd onSuccess={fetchContacts}/>
 
         <button className="p-2 rounded-lg bg-blue-500/40 hover:bg-blue-500/60 transition">
           <List size={18} />

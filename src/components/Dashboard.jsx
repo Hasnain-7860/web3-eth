@@ -21,7 +21,7 @@ export default function Dashboard() {
 
     <DashboardCards/>
     <div className="py-10 lg:py-0" id="users">
-    <AdminDashboard  />
+    <AdminDashboard   />
     </div>
     <div className="py-10 lg:py-0" id="Ban">
     <BlackListUsers/>

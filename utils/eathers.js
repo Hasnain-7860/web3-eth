@@ -18,6 +18,8 @@ export const writeContract = new ethers.Contract(
   abi,
   signer,
 );
+
+
 // export const writeContracts = new ethers.Block(
 //   contractAddress,
 //   abi,

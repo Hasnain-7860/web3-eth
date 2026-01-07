@@ -32,10 +32,7 @@ const copyAddress = (addr) => {
   toast.success("Address copied");
 };
 
-
-
-useEffect(() => {
-  const getData = async () => {
+const  fetchContacts = async () => {
     try {
       const addresses = await readContract.getAllContactAddresses();
 
@@ -67,7 +64,9 @@ useEffect(() => {
     }
   };
 
-  getData();
+
+useEffect(() => {
+   fetchContacts();
 }, []);
 
 
@@ -94,7 +93,7 @@ const toggleView = (index, e) => {
     Admin Controls
   </h1>
 
-  <HeaderAction onSearch={setSearch} />
+  <HeaderAction onSearch={setSearch} fetchContacts={fetchContacts} />
 </div>
 
 
