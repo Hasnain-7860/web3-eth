@@ -35,7 +35,7 @@ export default function AddContactModal({onSuccess}) {
 
     console.log({ signerAddr, owner });
 
-    // ⚠️ blob URL blockchain me store nahi ho sakta
+    //  blob URL blockchain me store nahi ho sakta
     const imageUri =
       image && image.startsWith("blob:") ? "" : (image || "");
 
@@ -49,7 +49,7 @@ export default function AddContactModal({onSuccess}) {
 
     await tx.wait();
 
-    toast.success("Contact added successfully 🎉", {
+    toast.success("Contact added successfully", {
       id: "add-contact",
     });
     onSuccess && onSuccess();
@@ -162,14 +162,20 @@ export default function AddContactModal({onSuccess}) {
                 className="w-full px-3 py-2 rounded-lg bg-[#020617]
                 border text-white text-sm"
               />
- 
+
               <input
-                value={uid}
-                onChange={(e) => setUid(e.target.value)}
-                placeholder="Email / Phone (UID)"
+             type="tel"
+              inputMode="numeric"
+              value={uid}
+           onChange={(e) => {
+            setUid(e.target.value.replace(/[^0-9]/g, ""));
+             }}
+            placeholder="(UID)"
                 className="w-full px-3 py-2 rounded-lg bg-[#020617]
                 border text-white text-sm"
-              />
+                  />
+
+              
             </div>
  
            

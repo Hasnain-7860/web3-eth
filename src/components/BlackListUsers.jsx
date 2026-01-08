@@ -2,12 +2,21 @@ import { useEffect, useState } from "react";
 import boypic from "../assets/boypic.png";
 import HeaderActions from "./HeaderActions";
 import { readContract } from "../../utils/eathers";
+import { Copy } from "lucide-react";
+import toast from "react-hot-toast";
 
 
 export default function BlackListUsers() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const shortAddress = (addr) =>
+  addr ? `${addr.slice(0, 3)}...${addr.slice(-4)}` : "";
+
+  const copyAddress = (addr) => {
+  navigator.clipboard.writeText(addr);
+  toast.success("Address copied");
+};
 
 
  const fetchBlockedUsers = async () => {
@@ -66,8 +75,8 @@ export default function BlackListUsers() {
           <thead className="bg-[#0E0C69] text-indigo-200">
             <tr>
               <th className="px-6 py-3">Name</th>
-              <th className="px-6 py-3">Email</th>
-              <th className="px-6 py-3">LP</th>
+              <th className="px-6 py-3">Uid</th>
+              <th className="px-6 py-3">Address</th>
               <th className="px-6 py-3">Points</th>
                <th className="px-6 py-3">Actions</th>
             </tr>
@@ -90,8 +99,18 @@ export default function BlackListUsers() {
           <img src={user.image} className="w-10 h-10 rounded-md" />
           {user.name}
         </td>
-        <td className="px-6 py-4 text-indigo-200">{user.email}</td>
-        <td className="px-6 py-4">{user.lp}</td>
+        <td className="px-6 py-4 text-indigo-200">{user.uid}</td>
+       <td className="px-6 py-4">
+  <div className="flex items-center gap-2">
+    <span>{shortAddress(user.contactAddress)}</span>
+    <Copy
+      size={16}
+      className="cursor-pointer text-gray-500 hover:text-black"
+      onClick={() => copyAddress(user.contactAddress)}
+    />
+  </div>
+</td>
+
         <td className="px-6 py-4">
           <span className="px-2 py-1 rounded bg-red-500">
             {user.points}

@@ -25,6 +25,23 @@ const [search, setSearch] = useState("");
 const filteredUsers = contacts.filter((user) =>
   user.name.toLowerCase().includes(search.toLowerCase())
 );
+const MIN = 0;
+const MAX = 100;
+
+const increasePoints = () => {
+  setUser((prev) => ({
+    ...prev,
+    points: Math.min(prev.points + 1, MAX),
+  }));
+};
+
+const decreasePoints = () => {
+  setUser((prev) => ({
+    ...prev,
+    points: Math.max(prev.points - 1, MIN),
+  }));
+};
+
 const shortAddress = (addr) =>
   addr ? `${addr.slice(0, 3)}...${addr.slice(-4)}` : "";
 
@@ -198,7 +215,17 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                 </div>
                 <div>
                   <p className="text-indigo-300 text-xs">Points</p>
-                  {user.points}
+                 <div className="flex items-center gap-2">
+                <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
+                  <Minus size={14} />
+                </button>
+                <div className="bg-indigo-700 w-[50px] rounded-md ">
+                <span className="flex items-center justify-center  py-1 rounded text-sm ">{user.points}</span>
+                </div>
+                <button className="bg-indigo-800 p-1 rounded-full hover:bg-indigo-600">
+                  <Plus size={14} />
+                </button>
+              </div>
                 </div>
               </div>
               <div className="flex gap-4 text-xs pt-3">
