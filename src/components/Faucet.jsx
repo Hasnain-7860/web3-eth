@@ -38,7 +38,7 @@ export default function FaucetMint() {
       console.log("Chain:", network.chainId.toString());
 
       if (network.chainId !== 11155111n) {
-        alert("Sepolia network pe switch karo");
+        toast("use sapolia network");
         setLoading(false);
         return;
       }
