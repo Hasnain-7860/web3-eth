@@ -3,12 +3,16 @@ import './index.css'
 import App from './App.jsx'
 import { ThirdwebProvider } from 'thirdweb/react'
 import { Toaster } from "react-hot-toast";
+import { Web3Provider } from './components/Web3Context.jsx';
 
 createRoot(document.getElementById('root')).render(
   <>
+
    <Toaster position="top-right" reverseOrder={false} />
   <ThirdwebProvider>
+    <Web3Provider>
     <App />
+    </Web3Provider>
     </ThirdwebProvider> 
     </>
 )

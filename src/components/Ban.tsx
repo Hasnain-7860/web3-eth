@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { writeContract, readContract, getSignerAddress } from "../../utils/eathers";
+import { readContract, writesContract } from "../../utils/eathers";
 import toast from "react-hot-toast";
+import { useWeb3 } from "./Web3Context";
 
 export default function Ban({ uid }) {
+  const { signer } = useWeb3();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
 
-  // 🔹 check block status
   const fetchBlockStatus = async () => {
     if (!uid) return;
     try {
@@ -22,57 +23,54 @@ export default function Ban({ uid }) {
     fetchBlockStatus();
   }, [uid]);
 
-const handleAction = async () => {
-  if (!uid) return toast.error("UID is missing!");
+  const handleAction = async () => {
+    if (!uid) return toast.error("UID is missing!");
+    if (!signer) return toast.error("Wallet not connected!");
 
-  const prevState = isBlocked;   // rollback ke liye
-  setIsBlocked(!prevState);      // ⚡ INSTANT UI CHANGE
-  setLoading(true);
-  setOpen(false);
+    const writeContract = writesContract(signer);
+    const prevState = isBlocked;
 
-  try {
-    let tx;
-    if (prevState) {
-      tx = await writeContract.unblockContact(uid);
-      toast.success("User unblocked successfully!");
-    } else {
-      tx = await writeContract.blockContact(uid);
-      toast.success("User banned successfully!");
+    setIsBlocked(!prevState);
+    setLoading(true);
+    setOpen(false);
+
+    try {
+      let tx;
+      if (prevState) {
+        tx = await writeContract.unblockContact(uid);
+        toast.success("User unblocked successfully!");
+      } else {
+        tx = await writeContract.blockContact(uid);
+        toast.success("User banned successfully!");
+      }
+      await tx.wait();
+    } catch (err) {
+      console.error(err);
+      setIsBlocked(prevState);
+      toast.error("Transaction failed!");
     }
 
-    await tx.wait();             // background confirm
-  } catch (err) {
-    console.error(err);
-    setIsBlocked(prevState);     // ❌ rollback
-    toast.error("Transaction failed!");
-  }
-
-  setLoading(false);
-};
-
-
+    setLoading(false);
+  };
 
   return (
     <>
-      {/* Button */}
       <button
         onClick={() => setOpen(true)}
-        className={`px-3 py-1 rounded text-white
-          ${isBlocked }`}
+        className={`px-3 py-1 rounded text-white ${
+          isBlocked ? "bg-green-500" : "bg-red-500"
+        }`}
       >
         {isBlocked ? "Unblock" : "Ban"}
       </button>
 
-      {/* Modal */}
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center
-          bg-[#020617]/80 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#020617]/80 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div
-            className="bg-gradient-to-br from-[#0b1026] to-[#111827]
-            border border-blue-900/40 rounded-lg w-[320px] p-5"
+            className="bg-gradient-to-br from-[#0b1026] to-[#111827] border border-blue-900/40 rounded-lg w-[320px] p-5"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-lg font-semibold text-white">
@@ -96,9 +94,11 @@ const handleAction = async () => {
               <button
                 onClick={handleAction}
                 disabled={loading}
-                className={`px-4 py-2 text-sm rounded-md text-white
-                  ${isBlocked ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"}
-                  disabled:opacity-50`}
+                className={`px-4 py-2 text-sm rounded-md text-white ${
+                  isBlocked
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-red-500 hover:bg-red-600"
+                } disabled:opacity-50`}
               >
                 {loading
                   ? "Processing..."

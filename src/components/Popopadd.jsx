@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import { UserPlus, X } from "lucide-react";
-import { writeContract, getOwner, getSignerAddress } from "../../utils/eathers";
+import { getOwner, getSignerAddress, writesContract } from "../../utils/eathers";
 import abi from "../../Abi.json";
 import toast from "react-hot-toast";
+import { useWeb3 } from "./Web3Context";
 
  
 const CONTRACT_ADDRESS = "0xAB551506b8245cf40908554d82cDb38D14C86A92";
  
  
 export default function AddContactModal({onSuccess}) {
+  const {signer}=useWeb3()
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
@@ -23,6 +25,7 @@ export default function AddContactModal({onSuccess}) {
   };
  
  const addContact = async () => {
+  const writeContract =writesContract(signer)
   if (!name || !uid) {
     toast.error("Name and UID are required");
     return;
@@ -35,7 +38,7 @@ export default function AddContactModal({onSuccess}) {
 
     console.log({ signerAddr, owner });
 
-    //  blob URL blockchain me store nahi ho sakta
+    
     const imageUri =
       image && image.startsWith("blob:") ? "" : (image || "");
 
@@ -74,24 +77,6 @@ export default function AddContactModal({onSuccess}) {
     setLoading(false);
   }
 };
-
- 
-// const addContact = async () => {
-//   console.log("FAKE SAVE (no blockchain)");
- 
-//   console.log({
-//     name,
-//     image,
-//     uid,
-//   });
- 
-//   // simulate delay
-//   await new Promise((res) => setTimeout(res, 800));
- 
-//   alert("Contact saved locally (no gas)");
- 
-//   setOpen(false);
-// };
  
   return (
     <>

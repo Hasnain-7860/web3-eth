@@ -13,13 +13,22 @@ const privateKey = import.meta.env.VITE_OWNER_PRIVATE_KEY;
 if (!privateKey) {
   throw new Error("Missing VITE_OWNER_PRIVATE_KEY in .env");
 }
- 
-const signer = new ethers.Wallet(privateKey, provider);
-export const writeContract = new ethers.Contract(
+
+export const writesContract =(signer)=>{
+  const writeContract = new ethers.Contract(
   contractAddress,
   abi,
   signer,
 );
+return writeContract
+}
+ 
+const signer = new ethers.Wallet(privateKey, provider);
+// export const writeContract = new ethers.Contract(
+//   contractAddress,
+//   abi,
+//   signer,
+// );
 
 export const FaucetContract = new ethers.Contract(
   fausetAddress,
@@ -28,7 +37,7 @@ export const FaucetContract = new ethers.Contract(
 );
 
 
-// export const writeContracts = new ethers.Block(
+// export const writesContracts = new ethers.Block(
 //   contractAddress,
 //   abi,
 //   signer,
