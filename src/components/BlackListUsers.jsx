@@ -4,6 +4,8 @@ import HeaderActions from "./HeaderActions";
 import { readContract } from "../../utils/eathers";
 import { Copy } from "lucide-react";
 import toast from "react-hot-toast";
+import Ban from "./Ban";
+import UnblockUser from "./UnblockUser";
 
 
 export default function BlackListUsers() {
@@ -117,9 +119,15 @@ export default function BlackListUsers() {
           </span>
         </td>
         <td className="px-6 py-4 flex gap-2">
-          <button className="px-3 py-1 border rounded hover:bg-blue-500">
+          {/* <button className="px-3 py-1 border rounded hover:bg-blue-500">
             Unblock
-          </button>
+          </button> */}
+          <UnblockUser
+  uid={user.uid}
+  onSuccess={() =>
+    setUsers((prev) => prev.filter((u) => u.uid !== user.uid))
+  }
+/>
         </td>
       </tr>
     ))

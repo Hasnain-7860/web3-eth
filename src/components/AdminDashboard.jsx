@@ -154,7 +154,12 @@ ${activeRow === i ? "bg-[#5743ED]" : ""}`}
                     <button className="text-[#67E9E9]" onClick={(e) => toggleView(i, e)}>
                       View
                     </button>
-                    <Ban  uid={user.uid} />
+                   <Ban
+  uid={user.uid}
+  onSuccess={() =>
+    setUsers((prev) => prev.filter((u) => u.uid !== user.uid))
+  }
+/>
                   </div>
                 </div>
               </div>

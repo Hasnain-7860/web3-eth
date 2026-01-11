@@ -58,7 +58,7 @@ export default function Ban({ uid }) {
       <button
         onClick={() => setOpen(true)}
         className={`px-3 py-1 rounded text-white ${
-          isBlocked ? "bg-green-500" : "bg-red-500"
+          isBlocked 
         }`}
       >
         {isBlocked ? "Unblock" : "Ban"}
